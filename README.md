@@ -1,13 +1,13 @@
-# ChatGPT Sentiment Analysis of Facebook Group Comments
+# OpenAI GPT Sentiment Analysis of Facebook Group Comments
 
 # 1. Objective
 Engaging with the public through social media is important to the success of many online businesses. While social media makes it easier than ever for the public to engage with businesses, small business owners already have a lot on their plate outside of responding to social media queries and comments. While analyzing written text can be automated through machine learning, this traditionally requires extensive resources that most individuals and small businesses do not have. 
 
-ChatGPT can classify natural language data, a task that has traditionally required the the training and deployment of machine learning models.
+OpenAI's GPT 3.5 model can classify natural language data, a task that has traditionally required the the training and deployment of machine learning models.
 
-The goal of this project is to **determine how well ChatGPT performs at text classification**. Specifically, I wanted to conceptually show whether **ChatGPT can improve the workflow of small businesses** that use social media. 
+The goal of this project is to **determine how well OpenAI's GPT 3.5 model performs at text classification**. Specifically, I wanted to conceptually show whether **GPT 3.5 can improve the workflow of small businesses** that use social media. 
 
-Here are the three tasks I asked ChatGPT to perform using comments posts in a Facebook group:
+Here are the three tasks I asked GPT 3.5 to perform using comments posts in a Facebook group:
 1. `sentiment`: Label the sentiment as "positive", "neutral", or "negative".
 2. `emotion`: Identify the main emotion.
 3. `respond`: Recommend whether or not the Facebook group administrator/business owner should quickly respond to the comment.
@@ -582,8 +582,8 @@ input_df
 
 <br>
 
-## Step 3. Seek ChatGPT's Wisdom using LangChain
-`LangChain` provides libraries that facilitate use of the ChatGPT API. One useful tool is their prompt templates, which allow you to easily swap out one part of the prompt (e.g. the text to analyze, as indicated by `{}`) while keeping the main instructions constant. 
+## Step 3. Seek GPT 3.5's Wisdom using LangChain
+`LangChain` provides libraries that facilitate use of the OpenAI API. One useful tool is their prompt templates, which allow you to easily swap out one part of the prompt (e.g. the text to analyze, as indicated by `{}`) while keeping the main instructions constant. 
 
 Here are the prompt templates I used to generate my final responses:
 
@@ -813,7 +813,7 @@ response_dict[iteration_id], prompt_dict[iteration_id] = batch_analyze_text_sent
 
 This table shows:
 * `text`: The input data, i.e. the caption of the Facebook group post (preceded by [YOU]) and the comment from a group member (preceeded by [MEMBER]).
-* `sentiment`, `emotions`, and `respond`: ChatGPT's responses to the corresponding task prompt.
+* `sentiment`, `emotions`, and `respond`: GPT 3.5's responses to the corresponding task prompt.
 
 
 <details>
@@ -821,7 +821,7 @@ This table shows:
 
 ```Python
 # Load previously pickled object
-path = r'C:\Users\silvh\OneDrive\lighthouse\portfolio-projects\ChatGPT-sentiment-analysis\outputs\raw\2023-07-01'
+path = r'C:\Users\silvh\OneDrive\lighthouse\portfolio-projects\GPT 3.5-sentiment-analysis\outputs\raw\2023-07-01'
 iteration = 2
 prompt_dict = loadpickle('prompt_dict_2023-07-02_1903.sav', path)
 response_dict = loadpickle('response_dict_2023-07-02_1903.sav', path)
@@ -834,9 +834,9 @@ response_dict = loadpickle('response_dict_2023-07-02_1903.sav', path)
 
 <br>    
 
-## ChatGPT's Responses
+## GPT 3.5's Responses
 
-Here are ChatGPT's responses:
+Here are GPT 3.5's responses:
 
 
 <details>
@@ -1001,12 +1001,12 @@ results_dict[iteration]
 
 <br>
 
-## Compare My Answers with ChatGPT's 
+## Compare My Answers with GPT 3.5's 
 
-At first glance, ChatGPT's responses looked pretty good. To quantify ChatGPT's accuracy at the task on hand, we need to know "ground truth"; thus:
+At first glance, GPT 3.5's responses looked pretty good. To quantify GPT 3.5's accuracy at the task on hand, we need to know "ground truth"; thus:
 * I labelled each post-comment pair myself for the "sentiment" and "respond" tasks (the "emotion task" is too open-ended). 
 * I did a simple exploratory data analysis to look at the class distributions of these ground-truth labels.
-* I used `scikit-learn` to determine ChatGPT's accuracy and produce a confusion matrix for each of the 2 tasks.
+* I used `scikit-learn` to determine GPT 3.5's accuracy and produce a confusion matrix for each of the 2 tasks.
 
 
 <details>
@@ -1201,9 +1201,9 @@ From the bar chart above, you see that most comments (63.16%) have positive sent
 <br>
 
 ### Sentiment Task
-For the basic sentiment analysis task, ChatGPT had a 73.7% accuracy: 5 out of 18 of its classifications differed from mine (though to be fair, not all comments fell neatly into one bucket).
+For the basic sentiment analysis task, GPT 3.5 had a 73.7% accuracy: 5 out of 18 of its classifications differed from mine (though to be fair, not all comments fell neatly into one bucket).
 
-This metric may seem okay at first, but looking more closely at the results, you can see that in all but 2 of the 19 cases, ChatGPT rated the sentiment as "positive". Based on my "ground-truth" labelling, simply guessing "positive" sentiment to every comment would have been correct 63% of the time without a need to read the text. This means that ChatGPT may have lacked:
+This metric may seem okay at first, but looking more closely at the results, you can see that in all but 2 of the 19 cases, GPT 3.5 rated the sentiment as "positive". Based on my "ground-truth" labelling, simply guessing "positive" sentiment to every comment would have been correct 63% of the time without a need to read the text. This means that GPT 3.5 may have lacked:
 * the sensitivity to detect messages of negative sentiment.
 * the ability to differentiate between neutral and positive sentiment.
 
@@ -1411,7 +1411,7 @@ transformed_df_dict[iteration]
 </div>
 
 
-Below are the texts for which ChatGPT and I had different sentment ratings. It's hard to know whether the incorrect classifications were due to a general bias towards positive labelling or a lack of understanding about what people generally want when it comes to health/fitness.
+Below are the texts for which GPT 3.5 and I had different sentment ratings. It's hard to know whether the incorrect classifications were due to a general bias towards positive labelling or a lack of understanding about what people generally want when it comes to health/fitness.
 
 
 <details>
@@ -1481,7 +1481,7 @@ results_dict[iteration].loc[[2, 3, 6, 7, 18], ['text', 'sentiment']]
 
 
 ### Respond Task
-ChatGPT I had better agreement when it came to advising whether or not the Facebook group admin should quickly respond to a given comment: We agreed on all but one comment, resulting in a 94.7% accuracy rating for ChatGPT.
+GPT 3.5 I had better agreement when it came to advising whether or not the Facebook group admin should quickly respond to a given comment: We agreed on all but one comment, resulting in a 94.7% accuracy rating for GPT 3.5.
 
 
 <details>
@@ -1641,7 +1641,7 @@ transformed_df_dict[iteration]
 </div>
 
 
-Below is the one case where ChatGPT and I didn't agree in relation to the "respond" task.
+Below is the one case where GPT 3.5 and I didn't agree in relation to the "respond" task.
 
 
 <details>
@@ -1682,7 +1682,7 @@ Sure, it would be nice to respond with something along the lines of "you're welc
 <br>
 
 ### Emotion Detection
-ChatGPT performed decently a lot of the time when asked to interpret emotion from text, but seems to take words literally, missing subtle nuances. For example, take text #18:
+GPT 3.5 performed decently a lot of the time when asked to interpret emotion from text, but seems to take words literally, missing subtle nuances. For example, take text #18:
 
 
 <details>
@@ -1720,7 +1720,7 @@ results_dict[iteration].loc[18:18, ['text', 'emotions']]
 The literal meaning of "vicious" has a negative tone, but in this context, it is evident that the commenter is joking: They don't actually think that the person who wrote the post is mean, just that the poster is reminding them about the unfortunate truth about something people enjoy.
 
 
-Here's another example where ChatGPT was likely wrong about the main emotion:
+Here's another example where GPT 3.5 was likely wrong about the main emotion:
 
 
 <details>
@@ -1760,12 +1760,12 @@ If the comment had simply read "I love airlie beach just never find the time to 
 <br>
 
 # 4. Conclusion and Possible Future Directions
-ChatGPT did a decent job at detecting sentiment and emotions, but had difficulty with discerning the meaning behind the words. However, it performed very well when given the specific task of determining whether or not the Facebook group administrator should respond to a comment. Perhaps ChatGPT can be most helpful when given sufficient context: The prompts for the sentiment and emotion tasks were not linked to a clear intent, unlike the "respond" task.
+GPT 3.5 did a decent job at detecting sentiment and emotions, but had difficulty with discerning the meaning behind the words. However, it performed very well when given the specific task of determining whether or not the Facebook group administrator should respond to a comment. Perhaps GPT 3.5 can be most helpful when given sufficient context: The prompts for the sentiment and emotion tasks were not linked to a clear intent, unlike the "respond" task.
 
-This was a fun proof-of-concept experiment to see if ChatGPT could be a good alternative to deploying a trained machine learning model. Based on these results, next time I would reflect more deeply about what I'd like ChatGPT to help me with and refine the work flow accordingly. Pragmatically, the low-hanging fruit would be to compare the results of different prompts.
+This was a fun proof-of-concept experiment to see if GPT 3.5 could be a good alternative to deploying a trained machine learning model. Based on these results, next time I would reflect more deeply about what I'd like GPT 3.5 to help me with and refine the work flow accordingly. Pragmatically, the low-hanging fruit would be to compare the results of different prompts.
 
 Given the unbalanced data set, I would use different evaluation metrics depending on the specific intent of the work flow. For example:
 * If I want a work flow that would be best at detecting negative sentiment/emotions so I can identify dissatisfied members/customers, I would likely use recall (sensitivity) as my evaluation metric, since there are fewer negative comments than positive.
 * If I was looking for comments with highest level of excitement or gratitude so I can identify a handful of the biggest fans, I would consider using precision as my evaluation metric.
 
-Of course, just because you CAN automate something, doesn't mean you should. Automations are most useful when there are too many messages than there are human resources. As these results show, ChatGPT is not a replacement for humans when it comes to understanding humans.
+Of course, just because you CAN automate something, doesn't mean you should. Automations are most useful when there are too many messages than there are human resources. As these results show, GPT 3.5 is not a replacement for humans when it comes to understanding humans.
