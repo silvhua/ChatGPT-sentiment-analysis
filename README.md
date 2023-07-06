@@ -12,6 +12,7 @@ Here are the three tasks I asked ChatGPT to perform using comments posts in a Fa
 2. `emotion`: Identify the main emotion.
 3. `respond`: Recommend whether or not the Facebook group administrator/business owner should quickly respond to the comment.
 
+<br>
 
 # 2. Methods
 
@@ -20,6 +21,8 @@ This project used the following:
 * [LangChain](https://api.python.langchain.com/en/latest/api_reference.html#), which uses the [OpenAI API](https://platform.openai.com/overview)
 * `scikit-learn` and `pandas`
 * Jupyter Notebook extension in VSCode
+
+<br>
 
 ## Step 1: Get Data from Facebook Group Posts
 
@@ -307,7 +310,10 @@ merged
 ```
 </details>
 
+<br>
 
+<details>
+<summary>Sample of the initial Facebook data set</summary>
 
 <div>
 <style scoped>
@@ -440,8 +446,9 @@ merged
 <p>79 rows × 6 columns</p>
 </div>
 
+</details>
 
-
+<br>
 
 <details>
 <summary>Code</summary>
@@ -453,7 +460,8 @@ print(f"Number of unique top-level comments: {len(merged['comment_id'].unique())
 </details>
     Number of unique posts: 30
     Number of unique top-level comments: 64
-    
+
+<br>    
 
 ## Step 2: Selecting a Subset of Comments for Analysis
 To limit the sample size for this mini experiment, I picked the longest comment for each post to include in analysis. Because not every post had comments, this left me with 19 comments to analyze.
@@ -596,6 +604,7 @@ input_df
 </table>
 </div>
 
+<br>
 
 ## Step 3. Seek ChatGPT's Wisdom using LangChain
 `LangChain` provides libraries that facilitate use of the ChatGPT API. One useful tool is their prompt templates, which allow you to easily swap out one part of the prompt (e.g. the text to analyze, as indicated by `{}`) while keeping the main instructions constant. 
@@ -822,6 +831,8 @@ response_dict[iteration_id], prompt_dict[iteration_id] = batch_analyze_text_sent
 
 </details>
 
+<br>
+
 # 3. Results
 
 This table shows:
@@ -844,7 +855,8 @@ response_dict = loadpickle('response_dict_2023-07-02_1903.sav', path)
     Dictionary keys: [1.1, 1.2, 2]
     	Time completed: 2023-07-04 22:50:38.239005
     Dictionary keys: [1.1, 1.2, 2]
-    
+
+<br>    
 
 ## ChatGPT's Responses
 
@@ -1023,6 +1035,7 @@ results_dict[iteration]
 </table>
 </div>
 
+<br>
 
 ## Compare My Answers with ChatGPT's 
 
@@ -1221,6 +1234,7 @@ plot_class_proportions(sentiment_hl_dict, respond_hl_dict)
 
 From the bar chart above, you see that most comments (63.16%) have positive sentiment and that most comments (68.42%) do not require a fast response.
 
+<br>
 
 ### Sentiment Task
 For the basic sentiment analysis task, ChatGPT had a 73.7% accuracy: 5 out of 18 of its classifications differed from mine (though to be fair, not all comments fell neatly into one bucket).
@@ -1523,6 +1537,7 @@ results_dict[iteration].loc[[2, 3, 6, 7, 18], ['text', 'sentiment']]
 </table>
 </div>
 
+<br>
 
 
 ### Respond Task
@@ -1748,6 +1763,8 @@ results_dict[iteration].loc[17:17, ['text', 'respond']]
 Sure, it would be nice to respond with something along the lines of "you're welcome", but this was not crucial as indicated the context provided in the prompt:
 > You aim to respond quickly to comments by group members if they request information, express a desire to improve their fitness, have health conditions or injuries, or express dissatisfaction with their current fitness.
 
+<br>
+
 ### Emotion Detection
 ChatGPT performed decently a lot of the time when asked to interpret emotion from text, but seems to take words literally, missing subtle nuances. For example, take text #18:
 
@@ -1848,6 +1865,8 @@ results_dict[iteration].loc[5:5, ['text', 'emotions']]
 
 If the comment had simply read "I love airlie beach just never find the time to go there anymore", then it would be reasonable to describe the commenter's main emotion as "disappointment". However, in this case, this line was more likely an after thought; the commenter was likely just noting a shared interest with the person who wrote the post.
 
+<br>
+
 # 4. Conclusion and Possible Future Directions
 ChatGPT did a decent job at detecting sentiment and emotions, but had difficulty with discerning the meaning behind the words. However, it performed very well when given the specific task of determining whether or not the Facebook group administrator should respond to a comment. Perhaps ChatGPT can be most helpful when given sufficient context: The prompts for the sentiment and emotion tasks were not linked to a clear intent, unlike the "respond" task.
 
@@ -1858,5 +1877,3 @@ Given the unbalanced data set, I would use different evaluation metrics dependin
 * If I was looking for comments with highest level of excitement or gratitude so I can identify a handful of the biggest fans, I would consider using precision as my evaluation metric.
 
 Of course, just because you CAN automate something, doesn't mean you should. Automations are most useful when there are too many messages than there are human resources. As these results show, ChatGPT is not a replacement for humans when it comes to understanding humans.
-
-#
